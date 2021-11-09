@@ -1,11 +1,5 @@
 import mongoose, { Document } from 'mongoose';
 
-export interface Readings extends Document {
-	shortUrl: string;
-	originalUrl: string;
-	noOfVisit: number;
-}
-
 const schema = new mongoose.Schema(
 	{
 		metricId: {
@@ -20,6 +14,6 @@ const schema = new mongoose.Schema(
 	{ timestamps: { createdAt: 'timestamp', updatedAt: false } }
 );
 
-const readingsModel = mongoose.model<Readings>('readingsModel', schema);
+const readingsModel = mongoose.model<any>('readingsModel', schema);
 
 export default readingsModel;

@@ -1,11 +1,5 @@
 import mongoose, { Document } from 'mongoose';
 
-export interface Metrics extends Document {
-	shortUrl: string;
-	originalUrl: string;
-	noOfVisit: number;
-}
-
 const schema = new mongoose.Schema({
 	name: {
 		type: String,
@@ -14,6 +8,6 @@ const schema = new mongoose.Schema({
 	},
 });
 
-const metricsModel = mongoose.model<Metrics>('metricsModel', schema);
+const metricsModel = mongoose.model<any>('metricsModel', schema);
 
 export default metricsModel;
