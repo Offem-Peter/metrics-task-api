@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import readingsModel from '../models/readings.model';
 import {
-  getLastUpdated,
-  filterReadings,
-  calcAveragePeriod,
+  getLastUpdatedAt,
+  getReadingsWithinRange,
 } from '../utils/readings.utils';
+
+import { getAverageReadingsForPeriod } from '../utils/readings.average';
 
 export async function createReadings(req: Request, res: Response) {
   const { value, metricId } = req.body;
@@ -18,21 +19,23 @@ export async function getReadings(req: Request, res: Response) {
 
   const readings = await readingsModel.find({ metricId });
 
-  const lastUpdated = getLastUpdated(readings);
+  const lastUpdatedAt = getLastUpdatedAt(readings);
+  const filteredReadings = getReadingsWithinRange(readings, range);
 
-  const filteredReadings = filterReadings(readings, range);
-
-  var resData: any;
+  var response: any;
 
   if (!filteredReadings.length) {
-    resData = { lastUpdated, data: [] };
+    response = { lastUpdatedAt, data: [] };
 
-    return res.json(resData);
+    return res.json(response);
   }
 
-  const average = calcAveragePeriod(filteredReadings, period);
+  const averageReaadingsInPeriod = getAverageReadingsForPeriod(
+    filteredReadings,
+    period
+  );
 
-  resData = { lastUpdated, data: average };
+  response = { lastUpdatedAt, data: averageReaadingsInPeriod };
 
-  return res.json(resData);
+  return res.json(response);
 }
