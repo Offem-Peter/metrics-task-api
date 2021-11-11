@@ -1,5 +1,4 @@
 import moment from 'moment';
-const dateTimeFormat = 'DD/MM/YYYY HH:mm:ss';
 
 export function getLastUpdatedAt(readings: any[]): string {
   if (!readings.length) {
