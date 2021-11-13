@@ -22,20 +22,16 @@ export async function getReadings(req: Request, res: Response) {
   const lastUpdatedAt = getLastUpdatedAt(readings);
   const filteredReadings = getReadingsWithinRange(readings, range);
 
-  var response: any;
+  var response: any = { lastUpdatedAt, data: [] };
 
-  if (!filteredReadings.length) {
-    response = { lastUpdatedAt, data: [] };
-
-    return res.json(response);
-  }
+  if (!filteredReadings.length) return res.json(response);
 
   const averageReaadingsInPeriod = getAverageReadingsForPeriod(
     filteredReadings,
     period
   );
 
-  response = { lastUpdatedAt, data: averageReaadingsInPeriod };
+  response = { ...response, data: averageReaadingsInPeriod };
 
   return res.json(response);
 }

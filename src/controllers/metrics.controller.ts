@@ -6,7 +6,7 @@ export async function createMetrics(req: Request, res: Response) {
 
   const metricExist = await metricsModel.findOne({ name }).lean();
 
-  if (metricExist) return res.status(400).json('Metric name exist');
+  if (metricExist) return res.status(400).json('Metric name already exist');
 
   await metricsModel.create({ name });
   return res.json({ message: 'Metrics Created' });
