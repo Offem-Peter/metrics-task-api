@@ -12,17 +12,3 @@ export function getLastUpdatedAt(readings: any[]): string {
   return diffInTimestamps;
 }
 
-export function getReadingsWithinRange(readings: any[], range: any): any[] {
-  const timeRange = moment().utc().subtract(1, range);
-  var newReadings: any[] = [];
-
-  newReadings = readings.filter((reading) => {
-    //get timestamp in moment for each reading
-    const timestamp = moment(reading.timestamp).utc();
-
-    //checks if timestamp is not outside time range
-    return timeRange.isBefore(timestamp);
-  });
-
-  return newReadings;
-}

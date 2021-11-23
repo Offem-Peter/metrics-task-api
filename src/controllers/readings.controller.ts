@@ -1,10 +1,8 @@
 import { Request, Response } from 'express';
-import readingsModel from '../models/readings.model';
-import {
-  getLastUpdatedAt,
-  getReadingsWithinRange,
-} from '../utils/readings.utils';
+import moment from 'moment';
 
+import readingsModel from '../models/readings.model';
+import { getLastUpdatedAt } from '../utils/readings.utils';
 import { getAverageReadingsForPeriod } from '../utils/readings.average';
 
 export async function createReadings(req: Request, res: Response) {
@@ -15,19 +13,26 @@ export async function createReadings(req: Request, res: Response) {
 }
 
 export async function getReadings(req: Request, res: Response) {
-  const { metricId, range, period } = req.query;
+  const { metricId, period } = req.query;
+  const range: any = req.query.range;
 
-  const readings = await readingsModel.find({ metricId });
+  const dateTimeRange = moment().utc().subtract(1, range);
+
+  const readings = await readingsModel.find({
+    metricId,
+    timestamp: {
+      $gte: dateTimeRange,
+    },
+  });
 
   const lastUpdatedAt = getLastUpdatedAt(readings);
-  const filteredReadings = getReadingsWithinRange(readings, range);
 
   var response: any = { lastUpdatedAt, data: [] };
 
-  if (!filteredReadings.length) return res.json(response);
+  if (!readings.length) return res.json(response);
 
   const averageReaadingsInPeriod = getAverageReadingsForPeriod(
-    filteredReadings,
+    readings,
     period
   );
 
