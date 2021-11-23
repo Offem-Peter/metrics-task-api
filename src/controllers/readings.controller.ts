@@ -31,12 +31,9 @@ export async function getReadings(req: Request, res: Response) {
 
   if (!readings.length) return res.json(response);
 
-  const averageReaadingsInPeriod = getAverageReadingsForPeriod(
-    readings,
-    period
-  );
+  const averageReadingsInPeriod = getAverageReadingsForPeriod(readings, period);
 
-  response = { ...response, data: averageReaadingsInPeriod };
+  response = { ...response, data: averageReadingsInPeriod };
 
   return res.json(response);
 }

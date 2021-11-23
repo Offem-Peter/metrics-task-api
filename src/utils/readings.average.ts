@@ -57,7 +57,7 @@ function calcAverage(roundDownReadingsList: any, uniqueDateTimeList: any) {
       return o.timeRoundedDown === datetime ? o.value : 0;
     });
 
-    ////This counts all the values with the same timestamp
+    //This counts all the values with the same timestamp
     const count = roundDownReadingsList.reduce(
       (counter: any, { timeRoundedDown }: any) => {
         return timeRoundedDown === datetime ? (counter += 1) : counter;
