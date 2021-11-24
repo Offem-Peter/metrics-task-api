@@ -11,4 +11,3 @@ export function getLastUpdatedAt(readings: any[]): string {
 
   return diffInTimestamps;
 }
-

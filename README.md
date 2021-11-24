@@ -35,6 +35,12 @@ start development by running
 yarn dev
 ```
 
+Run test by running
+
+```sh
+yarn test
+```
+
 The Server starts at address `localhost:8080`
 
 ## Endpoints
