@@ -39,11 +39,12 @@ Ejecutar prueba ejecutando
 
 ```sh
 yarn test
-`
+```
 
 El servidor comienza en la dirección `localhost:8080`
 
 ## Puntos finales
+
 ```
 
 POST /api/v1/metrics
@@ -53,6 +54,8 @@ GET /api/v1/readings
 
 ```
 
-
 # Gracias
+
+```
+
 ```
